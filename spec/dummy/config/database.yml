@@ -6,7 +6,7 @@
 
 asterisk_production: &asterisk_defaults
   adapter: mysql2
-  host: localhost
+  host: 10.0.2.2 #localhost
   username: rails_mcp
   password: rails_mcp
   database: asterisk
@@ -22,14 +22,14 @@ asterisk_test:
 
 asteriskcdrdb_production: &asteriskcdrdb_defaults
   adapter: mysql2
-  host: localhost
+  host: 10.0.2.2 #localhost
   username: rails_mcp
   password: rails_mcp
   database: asteriskcdrdb
 
 asteriskcdrdb_development:
   <<: *asteriskcdrdb_defaults
-  database: asteriskcdrdb_development
+  database: asteriskcdrdb #_development
 
 asteriskcdrdb_test:
   <<: *asteriskcdrdb_defaults
@@ -54,7 +54,7 @@ development:
   host: localhost
   username: rails_mcp
   password: rails_mcp
-  database: mcp_pbx_development
+  database: free_pbx_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -64,7 +64,7 @@ test: &test
   host: localhost
   username: rails_mcp
   password: rails_mcp
-  database: mcp_pbx_test
+  database: free_pbx_test
 #  adapter: sqlite3
 #  database: db/test.sqlite3
 #  pool: 5
@@ -76,5 +76,3 @@ production:
   pool: 5
   timeout: 5000
 
-cucumber:
-  <<: *test

@@ -27,7 +27,6 @@ gem "factory_girl_rails", ">= 4.2.0", :group => [:development, :test]
 gem 'rails3-generators', :group => :development
 
 #gem "jbuilder"
-gem 'rename', path: '/home/maxpub/dev/sandbox/rename'
 
 #group :assets do
   gem 'sass-rails',   '~> 3.2.3'

@@ -13,7 +13,8 @@ Gem::Specification.new do |s|
   s.summary     = "GUI to FreePBX systems."
   s.description = "Description of FreePbx."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
+
 
   s.add_dependency "rails", "~> 3.2.6"
   s.add_dependency "mcp_common"

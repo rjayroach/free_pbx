@@ -4,7 +4,7 @@ module FreePbx
   class AsteriskCdr < ActiveRecord::Base
     db_base = "asteriskcdrdb"
     establish_connection "#{db_base}_#{Rails.env}"
-    db_suffix = (['development', 'test'].include? Rails.env) ? "_#{Rails.env}" : ''
+    db_suffix = '' #(['development', 'test'].include? Rails.env) ? "_#{Rails.env}" : ''
     self.table_name = "#{db_base}#{db_suffix}.cdr"
 
     self.primary_key = 'uniqueid'
