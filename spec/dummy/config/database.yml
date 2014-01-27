@@ -1,0 +1,80 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+
+asterisk_production: &asterisk_defaults
+  adapter: mysql2
+  host: localhost
+  username: rails_mcp
+  password: rails_mcp
+  database: asterisk
+
+asterisk_development:
+  <<: *asterisk_defaults
+  database: asterisk_development
+
+asterisk_test:
+  <<: *asterisk_defaults
+  database: asterisk_test
+
+
+asteriskcdrdb_production: &asteriskcdrdb_defaults
+  adapter: mysql2
+  host: localhost
+  username: rails_mcp
+  password: rails_mcp
+  database: asteriskcdrdb
+
+asteriskcdrdb_development:
+  <<: *asteriskcdrdb_defaults
+  database: asteriskcdrdb_development
+
+asteriskcdrdb_test:
+  <<: *asteriskcdrdb_defaults
+  database: asteriskcdrdb_test
+
+
+elastix_acl:
+  adapter: sqlite3
+  database: /var/www/db/acl.db
+  pool: 5
+  timeout: 5000
+
+
+squid:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+development:
+  adapter: mysql2
+  host: localhost
+  username: rails_mcp
+  password: rails_mcp
+  database: mcp_pbx_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: mysql2
+  host: localhost
+  username: rails_mcp
+  password: rails_mcp
+  database: mcp_pbx_test
+#  adapter: sqlite3
+#  database: db/test.sqlite3
+#  pool: 5
+#  timeout: 5000
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000
+
+cucumber:
+  <<: *test

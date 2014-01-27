@@ -1,0 +1,6 @@
+
+
+<% @user.build_free_pbx_user if @user.free_pbx_user.nil? %>
+<%= f.simple_fields_for :free_pbx_user, r.free_pbx_user do |a| %>
+  <%= a.input :email_report %>
+<% end %>

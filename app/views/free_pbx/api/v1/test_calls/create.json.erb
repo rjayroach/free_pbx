@@ -1,0 +1,8 @@
+
+<% publish_to "#{@channel}" do %>
+  $("#alert_header").html('<%= j render :partial => 'create.html.erb' %>');
+<% end %>
+
+<%# return an empty array for JSON reply %>
+<%= [] %>
+

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @pbx_user.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @pbx_user.description %>
+</p>
+
+<p>
+  <b>Md5 password:</b>
+  <%= @pbx_user.md5_password %>
+</p>
+
+<p>
+  <b>Extension:</b>
+  <%= @pbx_user.extension %>
+</p>
+
+  <% @pbx_user.outbound_calls.each do |call| %>
+    <%= call.asterisk_monitor.path if !call.asterisk_monitor.nil?%>
+  <% end %>
+  <%= @pbx_user.outbound_calls.last.dst %>
+  <% @pbx_user.inbound_calls.placed_yesterday.not_answered.each do |call| %>
+   <%= call.src %>
+  <% end %>
+
+<%= link_to 'Edit', edit_pbx_user_path(@pbx_user) %> |
+<%= link_to 'Back', pbx_users_path %>

@@ -1,0 +1,57 @@
+
+<style>
+#search {
+    margin-left: 0;
+    padding-left: 19px;
+    border-left: 1px solid #eee;
+    }
+
+</style>
+
+<div id="search" class="hide">
+<%= search_form_for @search do |f| %>
+  <%= f.condition_fields do |c| %>
+
+    <div class="field">
+      <%= c.attribute_fields do |a| %>
+        <%= a.attribute_select %>
+      <% end %>
+
+      <%= c.predicate_select %>
+
+      <%= c.value_fields do |v| %>
+        <%= v.text_field :value %>
+      <% end %>
+    </div>
+
+  <% end %>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+</div>
+
+
+<h1>Listing CDRs</h1>
+
+<%
+table_collection = [
+  {table: 'free_pbx_cdrs', title: 'CDRs',
+   url: cdrs_url(format: "json", q: params[:q], datatable: true, report: 'cdrs'),
+   columns: ['Originated By', 'Destination', 'Date / Time', 'Disposition', 'Duration', 'Billing Seconds', 'Account Code', 'Recording']},
+   
+  {table: 'free_pbx_cdrs_by_hour', title: 'Hourly',
+   url: cdrs_url(format: "json", q: params[:q], datatable: true, report: 'by_hour'),
+   columns: ['Extension / Name', 'DID', 'Start Hour', 'Attempted', 'Completed', 'Percent Completed', 'Talk Time (minutes)', 'Average Call Length']},
+  
+  {table: 'free_pbx_first_and_last', title: 'First and Last',
+   url: cdrs_url(format: "json", q: params[:q], datatable: true, report: 'first_and_last'),
+   columns: ['Extension / Name', 'DID', 'First Call', 'Last Call']},
+   
+  {table: 'free_pbx_inbound', title: 'Inbound Call Dispostion',
+   url: cdrs_url(format: "json", q: params[:q], datatable: true, report: 'inbound'),
+   columns: ['Extension / Name', 'DID', 'Disposition', 'Total Calls']}
+]
+%>
+
+<%= render partial: "mcp_common/multi_tab/layout", locals: {list: table_collection} %>
+

@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+    <Author>Robert Roach</Author>
+    <LastAuthor>Robert Roach</LastAuthor>
+    <Created>2009-06-08T17:46:02Z</Created>
+    <LastSaved>2009-06-08T17:52:23Z</LastSaved>
+    <Company>Microsoft Corporation</Company>
+    <Version>11.6568</Version>
+  </DocumentProperties>
+  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+    <WindowHeight>12150</WindowHeight>
+    <WindowWidth>15180</WindowWidth>
+    <WindowTopX>480</WindowTopX>
+    <WindowTopY>90</WindowTopY>
+    <ProtectStructure>False</ProtectStructure>
+    <ProtectWindows>False</ProtectWindows>
+  </ExcelWorkbook>
+  <Styles>
+    <Style ss:ID="Default" ss:Name="Normal">
+      <Alignment ss:Vertical="Bottom"/>
+      <Borders/>
+      <Font/>
+      <Interior/>
+      <NumberFormat/>
+      <Protection/>
+    </Style>
+    <Style ss:ID="s22">
+      <NumberFormat ss:Format="Percent"/>
+    </Style>
+    <Style ss:ID="s23">
+      <Font ss:Underline="Single"/>
+    </Style>
+    <Style ss:ID="s24">
+      <NumberFormat ss:Format="@"/>
+    </Style>
+    <Style ss:ID="s25">
+      <NumberFormat ss:Format="0.0"/>
+    </Style>
+    <Style ss:ID="s26">
+      <NumberFormat ss:Format="General Date"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Calls By Hour">
+    <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="44<%# @cbh.size %>" x:FullColumns="1" x:FullRows="1">
+      <Column ss:AutoFitWidth="0" ss:Width="68.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="60"/>
+      <Column ss:AutoFitWidth="0" ss:Width="65.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="104.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="98.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="97.5"/>
+      <Row>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Start Hour</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Attempted</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Completed</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Percent Completed</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Talk Time (Minutes)</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Average Call Length</Data></Cell>
+      </Row>
+      <% @cbh.each do |cbh| %>
+        <Row>
+          <Cell ss:StyleID="s24"><Data ss:Type="Number"><%= cbh.hour %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= cbh.total_calls %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= cbh.completed %></Data></Cell>
+          <Cell ss:StyleID="s22"><Data ss:Type="Number"><%= (cbh.completed/cbh.total_calls).round(4) %></Data></Cell>
+          <Cell ss:StyleID="s25"><Data ss:Type="Number"><%= (cbh.total_duration/60).round(1) %></Data></Cell>
+          <Cell ss:StyleID="s25"><Data ss:Type="Number"><%= (cbh.total_duration/cbh.completed/60).round(2) if !cbh.total_duration.is_a? Float %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <Selected/>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="Calls By Agent By Hour">
+    <Table ss:ExpandedColumnCount="8" ss:ExpandedRowCount="44<%# @cbha.size %>" x:FullColumns="1" x:FullRows="1">
+      <Column ss:AutoFitWidth="0" ss:Width="81.75"/>
+      <Column ss:AutoFitWidth="0" ss:Width="74.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="68.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="60"/>
+      <Column ss:AutoFitWidth="0" ss:Width="65.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="104.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="98.25"/>
+      <Column ss:AutoFitWidth="0" ss:Width="97.5"/>
+      <Row>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Name</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">DID</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Start Hour</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Attempted</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Completed</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Percent Completed</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Talk Time (Minutes)</Data></Cell>
+        <Cell ss:StyleID="s23"><Data ss:Type="String">Average Call Length</Data></Cell>
+      </Row>
+      <% @cbha.each do |cbh| %>
+        <Row>
+          <Cell><Data ss:Type="String"><%= @ast.get_name_by_extension_or_outboundcid(cbh.src) %></Data></Cell>
+          <Cell ss:StyleID="s24"><Data ss:Type="Number"><%= cbh.src %></Data></Cell>
+          <Cell ss:StyleID="s24"><Data ss:Type="Number"><%= cbh.hour %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= cbh.total_calls %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= cbh.completed %></Data></Cell>
+          <Cell ss:StyleID="s22"><Data ss:Type="Number"><%= (cbh.completed/cbh.total_calls).round(4) %></Data></Cell>
+          <Cell ss:StyleID="s25"><Data ss:Type="Number"><%= (cbh.total_duration/60).round(1) %></Data></Cell>
+          <Cell ss:StyleID="s25"><Data ss:Type="Number"><%= (cbh.total_duration/cbh.completed/60).round(2) if !cbh.total_duration.is_a? Float %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <Selected/>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="First and Last Calls By Agent">
+    <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="44" x:FullColumns="1" x:FullRows="1">
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="120"/>
+      <Column ss:AutoFitWidth="0" ss:Width="120"/>
+      <Row>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Extension</Data></Cell>
+        <Cell><Data ss:Type="String">First Call</Data></Cell>
+        <Cell><Data ss:Type="String">Last Call</Data></Cell>
+      </Row>
+      <% @fnl.each do |fnl| %>
+         <Row>
+          <Cell><Data ss:Type="String"><%= @ast.get_name_by_extension_or_outboundcid(fnl[0][0]) %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fnl[0][0] %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fnl[0][1] %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= fnl[1][1] %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <Selected/>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+  </Worksheet>
+  <Worksheet ss:Name="Inbound Call Disposition">
+    <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="40" x:FullColumns="1" x:FullRows="1">
+      <Column ss:AutoFitWidth="0" ss:Width="96"/>
+      <Column ss:AutoFitWidth="0" ss:Width="63"/>
+      <Column ss:AutoFitWidth="0" ss:Width="77.25"/>
+      <Row>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Extension</Data></Cell>
+        <Cell><Data ss:Type="String">Disposition</Data></Cell>
+        <Cell><Data ss:Type="String">Total Calls</Data></Cell>
+      </Row>
+      <% @ibcd.each do |ibcd| %>
+        <Row>
+          <Cell><Data ss:Type="String"><%= ibcd.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= ibcd.dst %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= ibcd.disposition %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= ibcd.total_calls %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <Selected/>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+  </Worksheet>
+</Workbook>

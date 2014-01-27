@@ -1,0 +1,45 @@
+<h1>Listing pbx_users</h1>
+
+<%= search_form_for @search, :html => {:id => 'free_pbx_asterisk_cdr_search_f'}, :remote => true do |f| %>
+    <div class="field">
+    <%= f.label :name_cont, "Name contains" %>
+    <%= f.text_field :name_cont %>
+  </div>
+    <div class="field">
+    <%= f.label :extension_cont, "Extension contains" %>
+    <%= f.text_field :extension_cont %>
+  </div>
+    <div class="field">
+    <%= f.label :outboundcid_cont, "CID contains" %>
+    <%= f.text_field :outboundcid_cont %>
+  </div>
+  <div class="actions"><%= f.submit "Search", :id => 'free_pbx_asterisk_cdr_search' %></div>
+<% end %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Md5 password</th>
+    <th>Extension</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pbx_users.each do |pbx_user| %>
+  <tr>
+    <td><%= pbx_user.name %></td>
+    <td><%= pbx_user.description %></td>
+    <td><%= pbx_user.md5_password %></td>
+    <td><%= pbx_user.extension %></td>
+    <td><%= link_to 'Show', pbx_user %></td>
+    <td><%= link_to 'Edit', edit_pbx_user_path(pbx_user) %></td>
+    <td><%= link_to 'Destroy', pbx_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pbx user', new_pbx_user_path %>
