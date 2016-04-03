@@ -1,37 +1,10 @@
 require 'spec_helper'
 
-=begin
-NOTES about importing a CDR table from a production system for testing
-
-Before any tests are run, read in the contents of a Gzipped compressed file containing a list of CDRs
-
-- To grab a source file:
-
-mysqldump -uroot -psome_password asteriskcdrdb | gzip -c | ssh deployer@testing.host.com 'cat > /home/deployer/dev/engines/free_pbx/spec/fixtures/asteriskcdrdb.sql.gz'
-
-- To load it run:
-
-gunzip < /home/deployer/dev/engines/free_pbx/spec/factories/asteriskcdrdb.sql.gz | mysql -uroot -psome_password free_pbx_test
-
-- RSpec before code:
-
-    before(:all) do
-      file_name = 'spec/fixtures/asteriskcdrdb.sql.gz'
-      system "gunzip < #{file_name} | mysql -urails_mcp -prails_mcp free_pbx_test"
-      @record_count = AsteriskCdr.count
-    end
-
-=end
-
-
 module FreePbx
   describe AsteriskCdr do
 
     subject { create(:free_pbx_asterisk_cdr) }
-    
-    #it "has a valid factory" do
-    #  expect(create(:free_pbx_asterisk_cdr)).to be_valid
-    #end
+
     before(:each) do
       t = Time.local(2012, 12, 21, 14, 5, 0)
       Timecop.travel(t)
@@ -41,9 +14,9 @@ module FreePbx
       Timecop.return
     end
 
-
     # The records are generated from an external system, so we don't validate the records
     # Here the validations are testing whether the factory is generating appropriate records
+    # TODO: Update FactoryGirl and use the built in linter for validating factory is an MVO
     describe "Validations" do
       it "generates correct factories" do
         expect(subject.calldate).to_not be_blank
@@ -55,7 +28,6 @@ module FreePbx
         #expect(AsteriskCdr.all).to match_array([])
       end
     end  # Validations
-
 
     describe "search" do
       before(:each) do
@@ -188,8 +160,5 @@ module FreePbx
       end
 
     end # summary report methods
-
-
   end
 end
-
